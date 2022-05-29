@@ -5,6 +5,7 @@ const notification = require(".notification")
 
 //Contains watchlist parameters and its notifications
 const WatchlistGroup = mongoose.Schema({
+    email:{type:String, required:true},
     searchParams: {type: WatchlistParameters, required: true},
     notificationsArray: {type:[notification], required:false}
 })

@@ -22,6 +22,7 @@ const createNewUser = (email,password) =>{
     });
 };
 
+//Compares two passwords and returns boolean
 const checkPasswordMatch = (password, passwordDB)=>{
     let passwordMatch;
     bcrypt.compare(password, passwordDB)
@@ -29,6 +30,7 @@ const checkPasswordMatch = (password, passwordDB)=>{
     return  passwordMatch;
 }
 
+//Generates and returns JWT
 const generateJWT= (email,expiration)=>{
     jwt.sign(
         { email: email },

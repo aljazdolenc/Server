@@ -5,7 +5,6 @@ const WatchlistGroup= require('./watchlists')
 const userSchema = mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  watchlistGroups:{ type:[WatchlistGroup], required: false}
 });
 
 userSchema.plugin(uniqueValidator);
