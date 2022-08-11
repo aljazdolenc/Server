@@ -1,12 +1,18 @@
-const express=require('express');
-const router= express.Router();
+const express = require('express');
+const router = express.Router();
 
-router.get("/", GetAllWatchlists)// Returns whole watchlist
-router.put("/new", AddWatchlist) // Adds new watchlist
-router.get("/:watchlist", GetWatchlist)// Marks notification as read
-router.put("/:watchlist/:id", UpdateWatchlist)// Marks notification as read
-router.delete("/:watchlist/:id", DeleteWatchlist)// Marks notification as read
-router.put("/:watchlist/:id", NotificationWasSeen)// Marks notification as read
+const WatchlistControllers = require('../controllers/watchlists');
+const checkAuth = require('../middleware/check-auth');
+const { ObjectValidationMiddleware } = require('../middleware/validation');
+const {watchlistParametersSchema}= require('../schemas/watchlist-params')
+
+router.get("/", checkAuth, WatchlistControllers.getWatchlists)
+router.put("/new", checkAuth, WatchlistControllers.addWatchlist)
+router.get("/:watchlistId", checkAuth, WatchlistControllers.getWatchlist)
+router.put("/:watchlistId",checkAuth,ObjectValidationMiddleware('req.body.newParams', watchlistParametersSchema ),WatchlistControllers.updateWatchlist);
+router.delete("/:watchlistId", checkAuth, WatchlistControllers.deleteWatchlist);
+router.put("/:watchlistId/:notificationId", checkAuth, WatchlistControllers.notificationWasSeen);
+//! havent checked
 
 
-module.exports= router;
+module.exports = router;

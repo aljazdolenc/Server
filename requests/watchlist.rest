@@ -1,0 +1,42 @@
+GET http://localhost:3000/watchlists/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImI2N2M1ZDQwLWYwYTAtMTFlYy1iMzkxLTAzYjk3MzBkNDVkZCIsImVtYWlsIjoibW9qY2FAZ21haWwuY29tIiwiaWF0IjoxNjU1Nzk5NDY4LCJleHAiOjE2NTU4MDMwNjh9.a1sRfPnWvQ0auKbnmwE-DPbFEvG9d2zEsizziZQ8Q9Y
+
+###
+PUT  http://localhost:3000/watchlists/new
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdlMTUxZmMwLWYyZWMtMTFlYy1hM2I1LTU5OTU4MTU4YWFjOSIsImVtYWlsIjoibW9qY2FAZ21haWwuY29tIiwiaWF0IjoxNjU1OTg1ODExLCJleHAiOjE2NTU5ODk0MTF9.jF0pdImwUiSKLsiwMgnw5dgfqEfW7QqzfnokWa6nWUE
+
+{
+    "watchlistParams" : { "name": "3070 pc", "minPrice" : 0, "maxPrice": 9999, "location": "eu", "offerType": "all"}
+
+}
+
+###
+
+GET  http://localhost:3000/watchlists/a8d185f0-f2ec-11ec-bcbd-d5e3066bbe11
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjliMWYyZTYwLWYyZTQtMTFlYy1hNGQ1LTRkMDY2ODA2NTBjZSIsImVtYWlsIjoibW9qY2FAZ21haWwuY29tIiwiaWF0IjoxNjU1OTgyNDIyLCJleHAiOjE2NTU5ODYwMjJ9.F8nR2Vfj-jgUcR-fyjwszquyRLKA1BLmnic06-MJS10
+
+{
+
+}
+
+###
+PUT  http://localhost:3000/watchlists/7f9fa220-f201-11ec-bbc4-3d5aee05be21
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjliMWYyZTYwLWYyZTQtMTFlYy1hNGQ1LTRkMDY2ODA2NTBjZSIsImVtYWlsIjoibW9qY2FAZ21haWwuY29tIiwiaWF0IjoxNjU1OTgyNDIyLCJleHAiOjE2NTU5ODYwMjJ9.F8nR2Vfj-jgUcR-fyjwszquyRLKA1BLmnic06-MJS10
+
+{
+    "newParams" : { "name": "3070 pc", "minPrice" : 100, "maxPrice": 9999, "location": "eu", "offerType": "all"}
+
+}
+###
+
+DELETE   http://localhost:3000/watchlists/25ed0a80-f2ef-11ec-926e-45143830ad4d
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjdlMTUxZmMwLWYyZWMtMTFlYy1hM2I1LTU5OTU4MTU4YWFjOSIsImVtYWlsIjoibW9qY2FAZ21haWwuY29tIiwiaWF0IjoxNjU1OTg2OTA0LCJleHAiOjE2NTU5OTA1MDR9.SU-T9pd8i22JKWcBVQUDdotqGJheY9ZIzr4T_7yrCEk
+
+{
+
+}

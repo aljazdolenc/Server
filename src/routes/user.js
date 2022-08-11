@@ -1,9 +1,14 @@
-import {express} from "express";
+const express= require('express')
 const router= express.Router();
 
-router.get("/login", LoginUser);// Loggs user in
-router.post("/signup", SignupUser);// Registers user in DB
-router.delete("/delete-user", DeleteUser);// Deletes user
-router.put("change-password", ChangePassword);// Changes users password
+const UserControllers= require('../controllers/user');
+const checkAuth = require('../middleware/check-auth');
+
+
+
+router.post("/login", UserControllers.LoginUser);
+router.post("/signup", UserControllers.CreateUser);
+router.delete("/delete", checkAuth,UserControllers.DeleteUser);
+router.put("/change-password", checkAuth,UserControllers.ChangePassword);
 
 module.exports= router;

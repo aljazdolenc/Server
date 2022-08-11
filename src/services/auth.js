@@ -2,46 +2,55 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
 const User = require("../models/user");
+const { generateRandomId } = require('./shared-services');
+const { generateUsersWatchlist } = require('./watchlists')
 
 //Get config vars
 dotenv.config();
 
-// If user exists it returns it else returns false
-const checkUserExistance = (email) => {
- return User.findOne({ email: email })
+exports.checkUserExistance = async (email) => {
+
+    return await User.findOne({ email: email }).exec();
 };
 
-const createNewUser = (email,password) =>{
-    bcrypt.hash(password, 10)
-    .then((hash) =>{
+exports.hashPassword = (password) => {
+    return bcrypt.hash(password, 10)
+}
+
+exports.createNewUser = async (email, password) => {
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const usersId = generateRandomId();
+
         const newUser = new User({
+            'id': usersId,
             email: email,
-            password: hash
+            password: hashedPassword
         });
-        return newUser.save(); 
+
+        await newUser.save()
+            .then(() => console.log('successfully added new user'))
+            .catch(err => {
+                console.log('failed to add new user err:'+ err)
+            throw "ERROR_DB"});
+
+        await generateUsersWatchlist(usersId)
+
+};
+
+exports.checkPasswordMatch = async (password, passwordDB) => {
+    console.log('check password was called')
+
+    return new Promise((resolve, reject) => {
+        bcrypt.compare(password, passwordDB, (err, isValid) => {
+            if (err) {
+                reject(err)
+            }
+            resolve(isValid);
+        });
     });
 };
 
-//Compares two passwords and returns boolean
-const checkPasswordMatch = (password, passwordDB)=>{
-    let passwordMatch;
-    bcrypt.compare(password, passwordDB)
-    .then(result => passwordMatch=result)
-    return  passwordMatch;
+exports.deleteUser = async (email) => {
+    return await User.deleteOne({ email: email });
 }
-
-//Generates and returns JWT
-const generateJWT= (email,expiration)=>{
-    jwt.sign(
-        { email: email },
-        process.env.TOKEN_SECRET,
-        { expiresIn: expiration }
-    )
-}
-
-module.exports={
-    checkUserExistance, 
-    createNewUser,
-    checkPasswordMatch,
-    generateJWT
-            }

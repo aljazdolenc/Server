@@ -1,25 +1,38 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
-const notification = require(".notification")
-
-
-//Contains watchlist parameters and its notifications
-const WatchlistGroup = mongoose.Schema({
-    email:{type:String, required:true},
-    searchParams: {type: WatchlistParameters, required: true},
-    notificationsArray: {type:[notification], required:false}
-})
+const { Notification } = require("./notification");
 
 
 //Schema for Watchlist parameters
-const WatchlistParameters= mongoose.Schema({
-  name: { type: String, required: true, unique: true },
-  minPrice: {type:Number, require:true},
-  maxPrice: {type:Number, require:true},
-  location: {type:String, require:true},
-  OfferType: {type: String, required: true}
+const WatchlistParametersSchema = mongoose.Schema({
+  name: { type: String, required: true},
+  minPrice: { type: Number, require: true },
+  maxPrice: { type: Number, require: true },
+  location: { type: String, require: true },
+  offerType: { type: String, required: true }
 });
 
-WatchlistParameters.plugin(uniqueValidator);
+//Contains watchlist parameters and its notifications
+const WatchlistSchema = mongoose.Schema({
+  userId: { type: String, required: true },
+  watchlistId: { type: String, required: true },
+  searchParams: { type: WatchlistParametersSchema, required: true },
+  notificationsArray: { type: [], default: [] },
 
-module.exports = mongoose.model("WatchlistGroup", WatchlistGroup);
+})
+
+//Contains IDs of all users watchlists
+const UsersWatchlistsSchema = mongoose.Schema({
+  userId: { type: String, required: true, unique: true },
+  watchlistsArray: { type: [], required: true, default: [] }
+})
+
+//Plugins
+WatchlistSchema.plugin(uniqueValidator);
+UsersWatchlistsSchema.plugin(uniqueValidator);
+
+const UsersWatchlists = mongoose.model("UsersWatchlists", UsersWatchlistsSchema)
+const Watchlist = mongoose.model("Watchlist", WatchlistSchema)
+const WatchlistParameters = mongoose.model("WatchlistParameters", WatchlistParametersSchema)
+module.exports = {UsersWatchlists, Watchlist, WatchlistParameters}
+
